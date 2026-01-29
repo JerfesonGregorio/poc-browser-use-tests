@@ -15,17 +15,23 @@ import os
 from langchain_openai import ChatOpenAI  # pyright: ignore
 
 from browser_use import Agent
-from chat import ChatLangchain
+from fix.chat_qwen import ChatLangchain
 
 API_KEY = os.getenv("API_KEY", "")
-LOCAL_URL = os.getenv("BASE_URL", "")
-MODELO = 'qwen3-coder:30b'
+
+# BASE_URL = os.getenv("BASE_URL", "")
+BASE_URL = os.getenv("BASE_URL_SECUNDARIO", "")
+
+
+# MODELO = 'qwen3-coder:30b'
+MODELO = 'Qwen3-Coder-30B-A3B'
+# MODELO = 'Qwen3-VL-32B'
 
 async def main():
 	"""Basic example using ChatLangchain with OpenAI through LangChain."""
 
 	langchain_model = ChatOpenAI(
-		base_url=LOCAL_URL,
+		base_url=BASE_URL,
         model=MODELO,
         api_key=API_KEY,
 		temperature=0.0,
@@ -34,11 +40,14 @@ async def main():
 
 	llm = ChatLangchain(chat=langchain_model)
 
-	task = "Go to google.com and search for 'browser automation with Python'"
+	task = "Acesse 'http://localhost:9990/en_US/', acesse opção de 'T-shirts' e acesse as opções disponíveis para  'women'"
+
+	# task = "Go to google.com and search for 'browser automation with Python'"
 
 	agent = Agent(
 		task=task,
 		llm=llm,
+		use_vision=False,
 	)
 
 	print(f'🚀 Starting task: {task}')
