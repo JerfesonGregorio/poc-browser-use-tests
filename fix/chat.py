@@ -8,7 +8,7 @@ from browser_use.llm.exceptions import ModelProviderError
 from browser_use.llm.messages import BaseMessage
 from browser_use.llm.views import ChatInvokeCompletion, ChatInvokeUsage
 
-from serializer import LangChainMessageSerializer
+from fix.serializer import LangChainMessageSerializer
 
 if TYPE_CHECKING:
     from langchain_core.language_models.chat_models import BaseChatModel as LangChainBaseChatModel
